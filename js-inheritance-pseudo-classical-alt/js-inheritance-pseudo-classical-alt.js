@@ -12,39 +12,57 @@
 // DO NOT MODIFY FUNCTIONS 'makeHorse' AND 'makeFlyingHorse'
 // USE THE CONSTRUCTOR FUNCTIONS LOCATED AT THE END OF THIS FILE
 
-var makeHorse = function(name) {
-  var result = {};
-  result.name = name;
-  result.goSomewhere = function(destination) {
-    return name + ' is galloping to ' + destination + '!';
-  };
-  return result;
-};
+// var makeHorse = function(name) {
+//   var result = {};
+//   result.name = name;
+//   result.goSomewhere = function(destination) {
+//     return name + ' is galloping to ' + destination + '!';
+//   };
+//   return result;
+// };
 
-var makeFlyingHorse = function(name, color) {
-  var result = makeHorse(name);
-  result.color = color;
-  var oldGoSomewhere = result.goSomewhere;
-  result.goSomewhere = function(destination, milesToDestination) {
-    if (milesToDestination < 10) {
-      return oldGoSomewhere(destination);
-    } else {
-      return name + ' is flying to ' + destination + '!';
-    }
-  };
-  return result;
-};
+// var makeFlyingHorse = function(name, color) {
+//   var result = makeHorse(name);
+//   result.color = color;
+//   var oldGoSomewhere = result.goSomewhere;
+//   result.goSomewhere = function(destination, milesToDestination) {
+//     if (milesToDestination < 10) {
+//       return oldGoSomewhere(destination);
+//     } else {
+//       return name + ' is flying to ' + destination + '!';
+//     }
+//   };
+//   return result;
+// };
 
 // YOUR WORK GOES BELOW
 // Here's some starter code to get you going!
 // Do not use the ES6 `class` keyword; use ES5 to create your classes.
 
 var Horse = function(name) {
+  this.name = name;
 };
+  Horse.prototype.goSomewhere = function(destination) {
+    return this.name + ' is galloping to ' + destination + '!';
+  };
 
 
 
 var FlyingHorse = function(name, color) {
+  Horse.call(this, name)
+  this.color = color;
+  this.oldGoSomewhere = Horse.prototype.goSomewhere;
+  
 };
+
+FlyingHorse.prototype = Object.create(Horse.prototype)
+FlyingHorse.prototype.constructor = FlyingHorse 
+FlyingHorse.prototype.goSomewhere = function(destination, milesToDestination) {
+    if (milesToDestination < 10) {
+      return this.oldGoSomewhere(destination);
+    } else {
+      return this.name + ' is flying to ' + destination + '!';
+    }
+  };
 
 

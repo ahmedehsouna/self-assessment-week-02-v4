@@ -104,6 +104,7 @@ var displayData = function(data, user) {
   });
 };
 
+// here we are sending a message to the server
 var postData = function(message, username) {
   $.ajax({
     url: SERVER_URL,
@@ -114,6 +115,7 @@ var postData = function(message, username) {
       text: message
     }),
     success: function(data) {
+      displayData(data , username)
       console.log('Success!', data);
     },
     error: function(data) {
